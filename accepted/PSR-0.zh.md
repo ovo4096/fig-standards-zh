@@ -33,8 +33,8 @@
 * `\namespace\package\Class_Name` => `/path/to/project/lib/vendor/namespace/package/Class/Name.php`
 * `\namespace\package_name\Class_Name` => `/path/to/project/lib/vendor/namespace/package_name/Class/Name.php`
 
-以上是实现自动加载必须遵循的最低标准，你可以通过 SplClassLoader 样例，加载 PHP 5.3 的类测试
-是否遵循本标准。
+以上是实现自动加载必须遵循的最低标准，你可以通过 SplClassLoader 样例，加载 PHP 5.3 的类测
+试是否遵循本标准。
 
 实现示例
 ----------------------
