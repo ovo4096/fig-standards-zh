@@ -292,13 +292,11 @@ class ClassName
 }
 ```
 
-### 4.5. `abstract`, `final`, and `static`
+### 4.5. `abstract`, `final`, 和 `static`
 
-When present, the `abstract` and `final` declarations MUST precede the
-visibility declaration.
+若有 `abstract` 和 `final` 声明 **必须** 优先于访问修饰符。
 
-When present, the `static` declaration MUST come after the visibility
-declaration.
+若有 `static` 声明 **必须** 放置在访问修饰符之后。
 
 ```php
 <?php
@@ -312,18 +310,16 @@ abstract class ClassName
 
     final public static function bar()
     {
-        // method body
+        // 方法体
     }
 }
 ```
 
-### 4.6. Method and Function Calls
+### 4.6. 方法与函数的调用
 
-When making a method or function call, there MUST NOT be a space between the
-method or function name and the opening parenthesis, there MUST NOT be a space
-after the opening parenthesis, and there MUST NOT be a space before the
-closing parenthesis. In the argument list, there MUST NOT be a space before
-each comma, and there MUST be one space after each comma.
+当调用一个方法或者一个函数时，**绝不** 要在方法或函数名与开括号 `(` 之间添加一个空格，
+**绝不** 要在开括号 `(` 之后添加一个空格，也 **绝不** 要在闭括号 `)` 之前添加一个空格。在参
+数列表中，**绝不** 要在每个逗号之前添加一个空格，而每个逗号之后 **必须** 添加一个空格。
 
 ```php
 <?php
@@ -332,9 +328,8 @@ $foo->bar($arg1);
 Foo::bar($arg2, $arg3);
 ```
 
-Argument lists MAY be split across multiple lines, where each subsequent line
-is indented once. When doing so, the first item in the list MUST be on the
-next line, and there MUST be only one argument per line.
+参数列表 **可能** 被分割为多行，这样做时，每个子行需要缩进一次，每个参数 **必须** 单独占用一
+行。
 
 ```php
 <?php
@@ -345,69 +340,62 @@ $foo->bar(
 );
 ```
 
-5. Control Structures
+5. 控制结构
 ---------------------
 
-The general style rules for control structures are as follows:
+控制解构的风格规则一般如下:
 
-- There MUST be one space after the control structure keyword
-- There MUST NOT be a space after the opening parenthesis
-- There MUST NOT be a space before the closing parenthesis
-- There MUST be one space between the closing parenthesis and the opening
-  brace
-- The structure body MUST be indented once
-- The closing brace MUST be on the next line after the body
+- 控制结构关键字之后 **必须** 添加一个空格
+- 开括号 `(` 之后 **绝不** 要添加一个空格
+- 闭括号 `)` 之前 **绝不** 要添加一个空格
+- 闭括号 `)` 和开括号 `{` 之间 **必须** 添加一个空格
+- 结构体 **必须** 被缩进一次
+- 闭括号 `}` **必须** 放在结构体的下一行
 
-The body of each structure MUST be enclosed by braces. This standardizes how
-the structures look, and reduces the likelihood of introducing errors as new
-lines get added to the body.
+每个结构体 **必须** 用大括号 `{}` 括起来。这样有助于降低添加新行时发生错误的可能性。
 
 
 ### 5.1. `if`, `elseif`, `else`
 
-An `if` structure looks like the following. Note the placement of parentheses,
-spaces, and braces; and that `else` and `elseif` are on the same line as the
-closing brace from the earlier body.
+一个 `if` 结构看起来像下面这样。注意其中括号 `()` 与大括号 `{}` 的放置位置， `else` 和
+`elseif` 与之前结构体的闭括号 `}` 在同一行。
 
 ```php
 <?php
 if ($expr1) {
-    // if body
+    // if 体
 } elseif ($expr2) {
-    // elseif body
+    // elseif 体
 } else {
-    // else body;
+    // else 体;
 }
 ```
 
-The keyword `elseif` SHOULD be used instead of `else if` so that all control
-keywords look like single words.
-
+`elseif` 关键字 **应该** 替代 `else if` 这样所有的控制关键字看起来都是一个单词。
 
 ### 5.2. `switch`, `case`
 
-A `switch` structure looks like the following. Note the placement of
-parentheses, spaces, and braces. The `case` statement MUST be indented once
-from `switch`, and the `break` keyword (or other terminating keyword) MUST be
-indented at the same level as the `case` body. There MUST be a comment such as
-`// no break` when fall-through is intentional in a non-empty `case` body.
+一个 `switch` 结构看起来像下面这样，注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置，
+`switch` 中的 `case` 语句 **必须** 被缩进一次，`break` 关键字 (或其它终止关键字)
+**必须** 在同级的 `case` 体中缩进。当需要贯通执行时 **必须** 在一个不为空的 `case` 体中添
+加一条注释诸如 `// no break`。
 
 ```php
 <?php
 switch ($expr) {
     case 0:
-        echo 'First case, with a break';
+        echo '第一条 case 语句，与 break';
         break;
     case 1:
-        echo 'Second case, which falls through';
+        echo '第二条 case 语句，与贯通执行';
         // no break
     case 2:
     case 3:
     case 4:
-        echo 'Third case, return instead of break';
+        echo '第三条 case 语句, return 替代 break';
         return;
     default:
-        echo 'Default case';
+        echo '缺省值 case';
         break;
 }
 ```
@@ -415,103 +403,90 @@ switch ($expr) {
 
 ### 5.3. `while`, `do while`
 
-A `while` statement looks like the following. Note the placement of
-parentheses, spaces, and braces.
+一个 `while` 语句看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
 ```php
 <?php
 while ($expr) {
-    // structure body
+    // 结构体
 }
 ```
 
-Similarly, a `do while` statement looks like the following. Note the placement
-of parentheses, spaces, and braces.
+同样一个 `do while` 看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
 ```php
 <?php
 do {
-    // structure body;
+    // 结构体;
 } while ($expr);
 ```
 
 ### 5.4. `for`
 
-A `for` statement looks like the following. Note the placement of parentheses,
-spaces, and braces.
+一个 `for` 语句看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
 ```php
 <?php
 for ($i = 0; $i < 10; $i++) {
-    // for body
+    // for 体
 }
 ```
 
 ### 5.5. `foreach`
 
-A `foreach` statement looks like the following. Note the placement of
-parentheses, spaces, and braces.
+一个 `foreach` 语句看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
 ```php
 <?php
 foreach ($iterable as $key => $value) {
-    // foreach body
+    // foreach 体
 }
 ```
 
 ### 5.6. `try`, `catch`
 
-A `try catch` block looks like the following. Note the placement of
-parentheses, spaces, and braces.
+一个 `try catch` 块看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
 ```php
 <?php
 try {
-    // try body
+    // try 体
 } catch (FirstExceptionType $e) {
-    // catch body
+    // catch 体
 } catch (OtherExceptionType $e) {
-    // catch body
+    // catch 体
 }
 ```
 
-6. Closures
+6. 闭包 (Closures)
 -----------
 
-Closures MUST be declared with a space after the `function` keyword, and a
-space before and after the `use` keyword.
+闭包声明 **必须** 在 `function` 关键字的空格之后，并且 `use` 关键字的前后要有一个空格。
 
-The opening brace MUST go on the same line, and the closing brace MUST go on
-the next line following the body.
+开括号 `{` **必须** 在同一行，闭括号 `}` **必须** 放在闭包体的下一行。
 
-There MUST NOT be a space after the opening parenthesis of the argument list
-or variable list, and there MUST NOT be a space before the closing parenthesis
-of the argument list or variable list.
+**绝不** 要在参数列表或变量列表的开括号 `(` 之后添加一个空格，也 **绝不** 要添加一个空格在闭
+括号 `)` 在之前。
 
-In the argument list and variable list, there MUST NOT be a space before each
-comma, and there MUST be one space after each comma.
+参数列表和变量列表中，**绝不** 要在每个逗号之前添加空格，但是 **必须** 在每个逗号之后添加一个空格。
 
-Closure arguments with default values MUST go at the end of the argument
-list.
+闭包参数含有的默认值的参数 **必须** 放在参数列表结尾处。
 
-A closure declaration looks like the following. Note the placement of
-parentheses, commas, spaces, and braces:
+一个闭包声明看起来像下面这样。注意其中括号 `()`, 逗号, 空格, 以及大括号 `{}` 的放置位置:
 
 ```php
 <?php
 $closureWithArgs = function ($arg1, $arg2) {
-    // body
+    // 体
 };
 
 $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
-    // body
+    // 体
 };
 ```
 
-Argument lists and variable lists MAY be split across multiple lines, where
-each subsequent line is indented once. When doing so, the first item in the
-list MUST be on the next line, and there MUST be only one argument or variable
-per line.
+参数列表和变量列表 **可能** 被分割为多行，当这样做时，每个子行需要缩进一次，每个参数或变量
+**必须** 独立占用一行。
 
 When the ending list (whether or arguments or variables) is split across
 multiple lines, the closing parenthesis and opening brace MUST be placed
