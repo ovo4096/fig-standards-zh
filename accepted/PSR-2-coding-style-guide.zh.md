@@ -488,12 +488,10 @@ $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
 参数列表和变量列表 **可能** 被分割为多行，当这样做时，每个子行需要缩进一次，每个参数或变量
 **必须** 独立占用一行。
 
-When the ending list (whether or arguments or variables) is split across
-multiple lines, the closing parenthesis and opening brace MUST be placed
-together on their own line with one space between them.
+分割为多行的列表 (参数或变量) 结尾，闭括号 `)` 与开括号 `{` 之间 **必须** 添加一个空格并放
+置它们在独立的一行。
 
-The following are examples of closures with and without argument lists and
-variable lists split across multiple lines.
+下面是有或没有参数列表和变量列表，并被分割为多行的闭包示例。
 
 ```php
 <?php
@@ -502,7 +500,7 @@ $longArgs_noVars = function (
     $longerArgument,
     $muchLongerArgument
 ) {
-   // body
+   // 体
 };
 
 $noArgs_longVars = function () use (
@@ -510,7 +508,7 @@ $noArgs_longVars = function () use (
     $longerVar2,
     $muchLongerVar3
 ) {
-   // body
+   // 体
 };
 
 $longArgs_longVars = function (
@@ -522,7 +520,7 @@ $longArgs_longVars = function (
     $longerVar2,
     $muchLongerVar3
 ) {
-   // body
+   // 体
 };
 
 $longArgs_shortVars = function (
@@ -530,7 +528,7 @@ $longArgs_shortVars = function (
     $longerArgument,
     $muchLongerArgument
 ) use ($var1) {
-   // body
+   // 体
 };
 
 $shortArgs_longVars = function ($arg) use (
@@ -538,56 +536,52 @@ $shortArgs_longVars = function ($arg) use (
     $longerVar2,
     $muchLongerVar3
 ) {
-   // body
+   // 体
 };
 ```
 
-Note that the formatting rules also apply when the closure is used directly
-in a function or method call as an argument.
+注意这些格式化规则，也适用于闭包作为函数或方法的调用参数。
 
 ```php
 <?php
 $foo->bar(
     $arg1,
     function ($arg2) use ($var1) {
-        // body
+        // 体
     },
     $arg3
 );
 ```
 
 
-7. Conclusion
+7. 总结
 --------------
 
-There are many elements of style and practice intentionally omitted by this
-guide. These include but are not limited to:
+也有许多风格和做法在本指南中有意排除，这些可能包含如下所示，但并不局限于此:
 
-- Declaration of global variables and global constants
+- 全局变量和全局常量的声明
 
-- Declaration of functions
+- 函数的声明
 
-- Operators and assignment
+- 运算符和赋值
 
-- Inter-line alignment
+- 内联赋值
 
-- Comments and documentation blocks
+- 注释与文档块
 
-- Class name prefixes and suffixes
+- 类名前缀和后缀
 
-- Best practices
+- 最佳做法
 
-Future recommendations MAY revise and extend this guide to address those or
-other elements of style and practice.
+今后的各项建议可能修改和扩展本指南，来应对这些或其他的风格和做法。
 
 
-Appendix A. Survey
+附录 A. 调查
 ------------------
 
-In writing this style guide, the group took a survey of member projects to
-determine common practices.  The survey is retained herein for posterity.
+在编写这本风格指南，小组曾调查成员项目，以确定共的做法。这项调查为了后人参考保留在这里。
 
-### A.1. Survey Data
+### A.1. 调查数据
 
     url,http://www.horde.org/apps/horde/docs/CODING_STANDARDS,http://pear.php.net/manual/en/standards.php,http://solarphp.com/manual/appendix-standards.style,http://framework.zend.com/manual/en/coding-standard.html,http://symfony.com/doc/2.0/contributing/code/standards.html,http://www.ppi.io/docs/coding-standards.html,https://github.com/ezsystems/ezp-next/wiki/codingstandards,http://book.cakephp.org/2.0/en/contributing/cakephp-coding-conventions.html,https://github.com/UnionOfRAD/lithium/wiki/Spec%3A-Coding,http://drupal.org/coding-standards,http://code.google.com/p/sabredav/,http://area51.phpbb.com/docs/31x/coding-guidelines.html,https://docs.google.com/a/zikula.org/document/edit?authkey=CPCU0Us&hgd=1&id=1fcqb93Sn-hR9c0mkN6m_tyWnmEvoswKBtSc0tKkZmJA,http://www.chisimba.com,n/a,https://github.com/Respect/project-info/blob/master/coding-standards-sample.php,n/a,Object Calisthenics for PHP,http://doc.nette.org/en/coding-standard,http://flow3.typo3.org,https://github.com/propelorm/Propel2/wiki/Coding-Standards,http://developer.joomla.org/coding-standards.html
     voting,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,?,yes,no,yes
@@ -613,72 +607,76 @@ determine common practices.  The survey is retained herein for posterity.
     blank_line_after_php,no,no,no,no,yes,no,no,no,no,yes,yes,no,no,yes,?,yes,yes,no,yes,no,yes,no
     class_method_control_brace,next/next/same,next/next/same,next/next/same,next/next/same,next/next/same,same/same/same,next/next/next,same/same/same,same/same/same,same/same/same,same/same/same,next/next/next,next/next/same,next/same/same,next/next/next,next/next/same,next/next/same,next/next/same,next/next/same,same/same/same,next/next/same,next/next/next
 
-### A.2. Survey Legend
+### A.2. 调查说明
 
 `indent_type`:
-The type of indenting. `tab` = "Use a tab", `2` or `4` = "number of spaces"
+缩进类型。`tab` = "使用一个tab", `2` 或 `4` = "空格数"
 
 `line_length_limit_soft`:
-The "soft" line length limit, in characters. `?` = not discernible or no response, `no` means no limit.
+"soft" 软性行字符长度限制。`?` = 不可辨识或者无答复, `no` = 表示没有限制。
 
 `line_length_limit_hard`:
-The "hard" line length limit, in characters. `?` = not discernible or no response, `no` means no limit.
+"hard" 硬性行字符长度限制。`?` = 不可辨识或者无答复, `no` = 表示没有限制。
 
 `class_names`:
-How classes are named. `lower` = lowercase only, `lower_under` = lowercase with underscore separators, `studly` = StudlyCase.
+类是怎么命名的。`lower` = 只有小写字母, `lower_under` = 小写字母用下划线作为分割符,
+`studly` = StudlyCase 。
 
 `class_brace_line`:
-Does the opening brace for a class go on the `same` line as the class keyword, or on the `next` line after it?
+`same` = 类开括号 `{` 与类关键字在相同行, `next` = 类开括号 `{` 在类关键字的下一行。
 
 `constant_names`:
-How are class constants named? `upper` = Uppercase with underscore separators.
+类常量是如何命名的？`upper` = 大写字母用下划线作为分割符。
 
 `true_false_null`:
-Are the `true`, `false`, and `null` keywords spelled as all `lower` case, or all `upper` case?
+`true`, `false`, 以及 `null` 关键字拼写是全小写 `lower` 字母或是全大写 `upper` 字母？
 
 `method_names`:
-How are methods named? `camel` = `camelCase`, `lower_under` = lowercase with underscore separators.
+方法是如何命名的? `camel` = `camelCase`, `lower_under` = 小写字母用下划线作为分隔符。
 
 `method_brace_line`:
-Does the opening brace for a method go on the `same` line as the method name, or on the `next` line?
+`same` = 方法开括号 `{` 与方法名在相同行, `next` = 方法开括号 `{` 在方法名的下一行。
 
 `control_brace_line`:
-Does the opening brace for a control structure go on the `same` line, or on the `next` line?
+`same` = 控制结构的开括号 `{` 与控制结构在相同行, `next` = 控制结构开括号 `{` 在控制结构
+的下一行。
 
 `control_space_after`:
-Is there a space after the control structure keyword?
+控制结构关键字之后是否有空格？
 
 `always_use_control_braces`:
-Do control structures always use braces?
+控制结构是不是总使用大括号 `{}` ？
 
 `else_elseif_line`:
-When using `else` or `elseif`, does it go on the `same` line as the previous closing brace, or does it go on the `next` line?
+`same` = `else` 或 `elseif` 的开括号 `{` 与它们自己在相同行, `next` = `else` 或
+`elseif` 的开括号 `{` 在它们的下一行。
 
 `case_break_indent_from_switch`:
-How many times are `case` and `break` indented from an opening `switch` statement?
+`case` 和 `break` 在 `switch` 语句中缩进多少次？
 
 `function_space_after`:
-Do function calls have a space after the function name and before the opening parenthesis?
+函数调用的函数名与之后的开括号 `(` 是否有空格？
 
 `closing_php_tag_required`:
-In files containing only PHP, is the closing `?>` tag required?
+纯 PHP 文件是否使用 `?>` 作为闭合标签？
 
 `line_endings`:
-What type of line ending is used?
+使用什么类型换行符？
 
 `static_or_visibility_first`:
-When declaring a method, does `static` come first, or does the visibility come first?
+当声明一个方法，使用 `static` 在最前面还是使用访问修饰符在最前面？
 
 `control_space_parens`:
-In a control structure expression, is there a space after the opening parenthesis and a space before the closing parenthesis? `yes` = `if ( $expr )`, `no` = `if ($expr)`.
+在一个控制结构的表达式，开括号 `(` 之后和闭括号 `)` 之前是否有空格？
+`yes` = `if ( $expr )`, `no` = `if ($expr)`。
 
 `blank_line_after_php`:
-Is there a blank line after the opening PHP tag?
+PHP 的开标签之后是否有空行？
 
 `class_method_control_brace`:
-A summary of what line the opening braces go on for classes, methods, and control structures.
+类, 方法, 以及控制结构的开括号 `{` 的行位置统计。
 
-### A.3. Survey Results
+### A.3. 调查结果
 
     indent_type:
         tab: 7
