@@ -18,7 +18,7 @@
 
 - SHOULD NOT = NOT RECOMMENDED = 不应该 = 不建议
 
-- MAY = OPTIONAL = 可选 = 可能
+- MAY = OPTIONAL = 可选 = 可能 = 可以
 
 `实现者` 这个词在本文档被解读为一个实现了 `LoggerInterface` 的日志类库或框架。日志用户被简
 称为 `用户`。
@@ -30,8 +30,8 @@
 
 ### 1.1 基础
 
-- `LoggerInterface` 公开了 8 个方法去写 8 个等级的日志 (debug, info, notice, warning, error, critical, alert,
-  emergency) [RFC 5424] 中有详细解释。
+- `LoggerInterface` 公开了 8 个方法去写 8 个等级的日志 (debug, info, notice,
+  warning, error, critical, alert, emergency) [RFC 5424] 中有详细解释。
 
 - 第 9 个方法 `log` 接受一个日志等级作为第一个参数。调用这个方法结果 **必须** 与指定日志等级
   的方法结果相同。若调用这个方法时传递的日志等级不是本规范制定的 **必须** 丢出一个
@@ -40,103 +40,86 @@
 
 [RFC 5424]: http://tools.ietf.org/html/rfc5424
 
-### 1.2 Message
+### 1.2 消息
 
-- Every method accepts a string as the message, or an object with a
-  `__toString()` method. Implementors MAY have special handling for the passed
-  objects. If that is not the case, implementors MUST cast it to a string.
+- 每个方法接受一个字符串作为消息，或一个对象的 `__toString()` 方法。实现者 **可能** 对传递
+  的对象进行特殊处理，如果不是这样，实现者 **必须** 转换它到一个字符串。
 
-- The message MAY contain placeholders which implementors MAY replace with
-  values from the context array.
+- 消息 **可以** 包含占用符，实现者 **可以** 结合上下文数组替换该值。
 
-  Placeholder names MUST correspond to keys in the context array.
+  占用符名称 **必须** 对应上下文数组的键。
 
-  Placeholder names MUST be delimited with a single opening brace `{` and
-  a single closing brace `}`. There MUST NOT be any whitespace between the
-  delimiters and the placeholder name.
+  占用符名称 **必须** 被单个开括号 `{` 与 `}` 包含，括号 `{}` 与占用符名称之间 **绝不**
+  要有任何空格。
 
-  Placeholder names SHOULD be composed only of the characters `A-Z`, `a-z`,
-  `0-9`, underscore `_`, and period `.`. The use of other characters is
-  reserved for future modifications of the placeholders specification.
+  占用符名称 **应该** 只由字符 `A-Z`, `a-z`, `0-9`, 下划线 `_`, 以及句号 `.` 构成。其他
+  字符作为未来占用符规范修改使用的保留字符。
 
-  Implementors MAY use placeholders to implement various escaping strategies
-  and translate logs for display. Users SHOULD NOT pre-escape placeholder
-  values since they can not know in which context the data will be displayed.
+  实现者可以使用占用符转义生成日志。而用户如果不知道上下文将显示什么值，**不应该** 提前转义占
+  用符。
 
-  The following is an example implementation of placeholder interpolation
-  provided for reference purposes only:
+  以下占用符作为插值的参考例子:
 
   ```php
   /**
-   * Interpolates context values into the message placeholders.
+   * 使用上下文值替换消息占用符
    */
   function interpolate($message, array $context = array())
   {
-      // build a replacement array with braces around the context keys
+      // 构建一个由括号 `{}` 包含上下文键的替换数组
       $replace = array();
       foreach ($context as $key => $val) {
           $replace['{' . $key . '}'] = $val;
       }
 
-      // interpolate replacement values into the message and return
+      // 替换消息占用符并返回
       return strtr($message, $replace);
   }
 
-  // a message with brace-delimited placeholder names
+  // 含有括号 `{}` 包裹的占用符名称的消息
   $message = "User {username} created";
 
-  // a context array of placeholder names => replacement values
+  // 含有占用符名指向替换值的上下文数组
   $context = array('username' => 'bolivar');
 
-  // echoes "User bolivar created"
+  // 输出 "User bolivar created"
   echo interpolate($message, $context);
   ```
 
-### 1.3 Context
+### 1.3 上下文
 
-- Every method accepts an array as context data. This is meant to hold any
-  extraneous information that does not fit well in a string. The array can
-  contain anything. Implementors MUST ensure they treat context data with
-  as much lenience as possible. A given value in the context MUST NOT throw
-  an exception nor raise any php error, warning or notice.
+- 每个方法接受一个数组作为上下文的数据，用来持有字符串无关的信息，该数组可以包含任何内容。实现
+  者 **必须** 确保对上下文数据尽可能多的宽容。给定上下文一个值 **绝不** 要抛出异常也不要引发
+  任何 PHP error, warning 或 notice。
 
-- If an `Exception` object is passed in the context data, it MUST be in the
-  `'exception'` key. Logging exceptions is a common pattern and this allows
-  implementors to extract a stack trace from the exception when the log
-  backend supports it. Implementors MUST still verify that the `'exception'`
-  key is actually an `Exception` before using it as such, as it MAY contain
-  anything.
+- 如果 `Exception` 传递给上下文数据，它 **必须** 包含在 `'exception'` 键当中。记录异常是
+  一个非常普遍的模式，实现者可以在后端需要它时提取堆栈跟踪。实现者在每次使用它时仍要 **必须**
+  验证 `'exception'` 键值是一个真正的 `Exception`，因为它 **可能** 包含任何内容。
 
-### 1.4 Helper classes and interfaces
+### 1.4 助手类与接口
 
-- The `Psr\Log\AbstractLogger` class lets you implement the `LoggerInterface`
-  very easily by extending it and implementing the generic `log` method.
-  The other eight methods are forwarding the message and context to it.
+- 通过继承 `Psr\Log\AbstractLogger` 并实现通用的 `log` 方法，其他的 8 个方法就会传递消息
+  和上下文给它，使你实现 `LoggerInterface` 变得非常容易。
 
-- Similarly, using the `Psr\Log\LoggerTrait` only requires you to
-  implement the generic `log` method. Note that since traits can not implement
-  interfaces, in this case you still have to implement `LoggerInterface`.
+- 同样，若使用 `Psr\Log\LoggerTrait` 只要实现通用的 `log` 方法就可以了。注意 trait 不能
+  实现接口，所以你仍要实现 `LoggerInterface`。
 
-- The `Psr\Log\NullLogger` is provided together with the interface. It MAY be
-  used by users of the interface to provide a fall-back "black hole"
-  implementation if no logger is given to them. However conditional logging
-  may be a better approach if context data creation is expensive.
+- 一起提供的接口 `Psr\Log\NullLogger`，在无日志时，可以通过使用这个接口实现提供一个空记录，
+  不过在上下文数据创建代价昂贵的情况，条件记录可能是更好途径。
 
-- The `Psr\Log\LoggerAwareInterface` only contains a
-  `setLogger(LoggerInterface $logger)` method and can be used by frameworks to
-  auto-wire arbitrary instances with a logger.
+- `Psr\Log\LoggerAwareInterface` 只包含一个 `setLogger(LoggerInterface $logger)`
+  方法框架可以使用它实现自动连接任意的日志记录实例。
 
-- The `Psr\Log\LoggerAwareTrait` trait can be used to implement the equivalent
-  interface easily in any class. It gives you access to `$this->logger`.
+- `Psr\Log\LoggerAwareTrait` trait 你可以在任何类中通过它的 `$this->logger` 简单实现
+  相同的接口。
 
-- The `Psr\Log\LogLevel` class holds constants for the eight log levels.
+- `Psr\Log\LogLevel` 类包含 8 个日志等级的常量。
 
-2. Package
+
+2. 包
 ----------
 
-The interfaces and classes described as well as relevant exception classes
-and a test suite to verify your implementation is provided as part of the
-[psr/log](https://packagist.org/packages/psr/log) package.
+本文描述的接口和类相关的异常类以及一系列验证你实现的测试提供在 [psr/log](https://packagist.org/packages/psr/log) 包中。
 
 3. `Psr\Log\LoggerInterface`
 ----------------------------
@@ -147,24 +130,21 @@ and a test suite to verify your implementation is provided as part of the
 namespace Psr\Log;
 
 /**
- * Describes a logger instance
+ * 日志记录实例
  *
- * The message MUST be a string or object implementing __toString().
+ * 消息必须是字符串或实现 __toString() 的对象
  *
- * The message MAY contain placeholders in the form: {foo} where foo
- * will be replaced by the context data in key "foo".
+ * 消息可能包含占位符: {foo} 这里 foo 将被替换为上下文数据的键 "foo"
  *
- * The context array can contain arbitrary data, the only assumption that
- * can be made by implementors is that if an Exception instance is given
- * to produce a stack trace, it MUST be in a key named "exception".
+ * 上下文数组可以包含任何数据，只有在作为异常实例进行堆栈跟踪时，它的键名必须是 "exception"
  *
- * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
- * for the full interface specification.
+ * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
+ * 阅读完整的实例规范
  */
 interface LoggerInterface
 {
     /**
-     * System is unusable.
+     * 系统不可用
      *
      * @param string $message
      * @param array $context
@@ -173,10 +153,9 @@ interface LoggerInterface
     public function emergency($message, array $context = array());
 
     /**
-     * Action must be taken immediately.
+     * 必须立即采取的行动
      *
-     * Example: Entire website down, database unavailable, etc. This should
-     * trigger the SMS alerts and wake you up.
+     * 例如: 网站崩溃, 数据库不可以用, 等等。这应该发送一条短信来提醒你
      *
      * @param string $message
      * @param array $context
@@ -185,9 +164,9 @@ interface LoggerInterface
     public function alert($message, array $context = array());
 
     /**
-     * Critical conditions.
+     * 紧急情况
      *
-     * Example: Application component unavailable, unexpected exception.
+     * 例如: 程序组件不可用, 非预期的异常
      *
      * @param string $message
      * @param array $context
@@ -196,8 +175,7 @@ interface LoggerInterface
     public function critical($message, array $context = array());
 
     /**
-     * Runtime errors that do not require immediate action but should typically
-     * be logged and monitored.
+     * 运行时的错误这不需要立即处理，但应该被记录下来
      *
      * @param string $message
      * @param array $context
@@ -206,10 +184,9 @@ interface LoggerInterface
     public function error($message, array $context = array());
 
     /**
-     * Exceptional occurrences that are not errors.
+     * 非错误性的异常
      *
-     * Example: Use of deprecated APIs, poor use of an API, undesirable things
-     * that are not necessarily wrong.
+     * 例如: API 过时, 不当使用 API, 不好的行为但不一定是错误的
      *
      * @param string $message
      * @param array $context
@@ -218,7 +195,7 @@ interface LoggerInterface
     public function warning($message, array $context = array());
 
     /**
-     * Normal but significant events.
+     * 正常但需要突出的事件
      *
      * @param string $message
      * @param array $context
@@ -227,7 +204,7 @@ interface LoggerInterface
     public function notice($message, array $context = array());
 
     /**
-     * Interesting events.
+     * 值得注意的事件
      *
      * Example: User logs in, SQL logs.
      *
@@ -238,7 +215,7 @@ interface LoggerInterface
     public function info($message, array $context = array());
 
     /**
-     * Detailed debug information.
+     * 详细的调试信息
      *
      * @param string $message
      * @param array $context
@@ -247,7 +224,7 @@ interface LoggerInterface
     public function debug($message, array $context = array());
 
     /**
-     * Logs with an arbitrary level.
+     * 表示任意的等级的日志
      *
      * @param mixed $level
      * @param string $message
@@ -267,12 +244,12 @@ interface LoggerInterface
 namespace Psr\Log;
 
 /**
- * Describes a logger-aware instance
+ * logger-aware 实例
  */
 interface LoggerAwareInterface
 {
     /**
-     * Sets a logger instance on the object
+     * 设置一个日志记录实例在这个对象
      *
      * @param LoggerInterface $logger
      * @return null
@@ -290,7 +267,7 @@ interface LoggerAwareInterface
 namespace Psr\Log;
 
 /**
- * Describes log levels
+ * 日志等级
  */
 class LogLevel
 {
