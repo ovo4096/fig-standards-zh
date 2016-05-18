@@ -115,23 +115,24 @@ Composer 没有PEAR 作为 PHP 源的 "单一主目录"。相反，有多个目�
 - 为非类资源提供通用的转换规则
 
 
-4. 方法
+4. 方案
 -------------
 
-### 4.1 选择的方法
+### 4.1 最佳方案
 
-本方法保留了 PSR-0 关键特性，同时消除了更深层次的目录结构。此外，指定了一些附加规则使得更明确
+本方案保留了 PSR-0 关键特性，同时消除了更深层次的目录结构。此外，指定了一些附加规则使得更明确
 的互操作性实现。
 
 尽管不涉及目录映射，最终草案还是规定了自动加载器应该如何处理错误。具体来说，它禁止抛出异常或提
 出错误，这有两方面的原因。
 
-1. PHP 中自动加载器设计为可堆叠的，如果一个自动加载器不能加载另一个有机会做到这一点。若有一个
-自动加载器触发了一个打断错误此过程将不会进行下去。
+1. PHP 中自动加载器设计是可堆叠的，如果一个自动加载器不能加载，则其他的仍有机会继续加载。若有
+其中一个自动加载器发生错误此过程将不会进行下去。
 
-2. `class_exists()` 和 `interface_exists()` 允许即便是在尝试自动加载之后找不到类或接口
-。抛出异常的自动加载器将使得 `class_exists()` 不可用，从互操作性的角度来看这是无法接受的。自
-动加载器在找不到类的情况下最好通过 PSR-3 兼容的或者其他的日志记录提供附加的调试信息。
+2. `class_exists()` 和 `interface_exists()` 允许在正常自动加载之后找不到类或接口，若自
+动加载器抛出异常将使得 `class_exists()` 不可用，从互操作性的角度来看这是无法接受的。自动加载
+器在找不到类的情况下最好通过日志记录提供附加的调试信息，日志可以使用 PSR-3 兼容日志记录或其他
+什么。
 
 优点:
 
@@ -139,82 +140,71 @@ Composer 没有PEAR 作为 PHP 源的 "单一主目录"。相反，有多个目�
 
 - 文件位置更加固定
 
-- 停止类名中下划线作为目录分隔符
+- 不再使用类名中下划线作为目录分隔符
 
 - 更明确的互操作性实现
 
 缺点:
 
-- It is no longer possible, as under PSR-0, to merely examine a class name to
-  determine where it is in the file system (the "class-to-file" convention
-  inherited from Horde/PEAR).
+- 不能像 PSR-0 仅仅通过类名就能确定它在文件系统的具体位置 (这种 "类-到-文件" 约定继承自
+  Horde/PEAR)。
 
 
-### 4.2 Alternative: Stay With PSR-0 Only
+### 4.2 备选方案: 仍然遵循 PSR-0 标准
 
-Staying with PSR-0 only, although reasonable, does leave us with relatively
-deeper directory structures.
+仍然遵循 PSR-0 标准，这尽管合理，但只会留下较深的目录结构。
 
-Pros:
+优点:
 
-- No need to change anyone's habits or implementations
+- 不需要改变任何惯例或实现
 
-Cons:
+缺点:
 
-- Leaves us with deeper directory structures
+- 留下更深的目录结构
 
-- Leaves us with underscores in the class name being honored as directory
-  separators
+- 留下遵从类名中使用下划线作为目录分隔符的做法
 
 
-### 4.3 Alternative: Split Up Autoloading And Transformation
+### 4.3 备选方案: 自动加载与转换分离
 
-Beau Simensen and others suggested that the transformation algorithm might be
-split out from the autoloading proposal, so that the transformation rules
-could be referenced by other proposals. After doing the work to separate them,
-followed by a poll and some discussion, the combined version (i.e.,
-transformation rules embedded in the autoloader proposal) was revealed as the
-preference.
+Beau Simensen 和其他人建议，转换逻辑可以从自动加载提案中分离，这样其他提案可以引用转换规则。
+对它们的分离工作，日后会通过投票和讨论进行，合并版本 (如: 转换规则嵌入自动加载提案) 做为优先采
+用项。
 
-Pros:
+优点:
 
-- Transformation rules could be referenced separately by other proposal
+- 其他提案可以引用分离的转换规则
 
-Cons:
+缺点:
 
-- Not in line with the wishes of poll respondents and some collaborators
+- 不符合投票和一些合作者的意愿
 
-### 4.4 Alternative: Use More Imperative And Narrative Language
+### 4.4 备选方案: 使用更多的祈使句和叙述语言
 
-After the second vote was pulled by a Sponsor after hearing from multiple +1
-voters that they supported the idea but did not agree with (or understand) the
-wording of the proposal, there was a period during which the voted-on proposal
-was expanded with greater narrative and somewhat more imperative language. This
-approach was decried by a vocal minority of participants. After some time, Beau
-Simensen started an experimental revision with an eye to PSR-0; the Editor and
-Sponsors favored this more terse approach and shepherded the version now under
-consideration, written by Paul M. Jones and contributed to by many.
+第二轮投票之后，发起人听到最多的投票是他们支持这个想法但不同意提案的措辞 (或解释)，有段时间提案
+投票扩大到更多叙述和一些更命令式的语言上，这样的做法被少数直言不讳的参与者谴责。之后的一段时间
+Beau Simensen 开始着眼与 PSR-0 的实验性修订，编者和发起人更青睐这种简明的做法并沿用至当前审
+议中的版本 (由贡献最多的 Paul M. Jones 编写)。
 
-### Compatibility Note with PHP 5.3.2 and below
+### PHP 5.3.3 之前版本的兼容
 
-PHP versions before 5.3.3 do not strip the leading namespace separator, so
-the responsibility to look out for this falls on the implementation. Failing
-to strip the leading namespace separator could lead to unexpected behavior.
+PHP 5.3.3 之前的版本不舍去前缀的命名空间，因此找出具体实例落在了具体的声明上。舍去前缀的命名
+空间会导致异常发生。
 
 
-5. People
+5. 人员
 ---------
 
-### 5.1 Editor
+### 5.1 编者
 
 - Paul M. Jones, Solar/Aura
 
-### 5.2 Sponsors
+### 5.2 发起人
 
 - Phil Sturgeon, PyroCMS (Coordinator)
 - Larry Garfield, Drupal
 
-### 5.3 Contributors
+### 5.3 贡献者
 
 - Andreas Hennings
 - Bernhard Schussek
@@ -222,26 +212,26 @@ to strip the leading namespace separator could lead to unexpected behavior.
 - Donald Gilbert
 - Mike van Riel
 - Paul Dragoonis
-- Too many others to name and count
+- 和其他不计其数的贡献者
 
 
-6. Votes
+6. 投票
 --------
 
-- **Entrance Vote:** <https://groups.google.com/d/msg/php-fig/_LYBgfcEoFE/ZwFTvVTIl4AJ>
+- **投票入口:** <https://groups.google.com/d/msg/php-fig/_LYBgfcEoFE/ZwFTvVTIl4AJ>
 
-- **Acceptance Vote:**
+- **采纳的投票:**
 
-    - 1st attempt: <https://groups.google.com/forum/#!topic/php-fig/Ua46E344_Ls>,
-      presented prior to new workflow; aborted due to accidental proposal modification
+    - 第一次: <https://groups.google.com/forum/#!topic/php-fig/Ua46E344_Ls>,
+      提出之前的新工作流; 因意外的提案修改中止
 
-    - 2nd attempt: <https://groups.google.com/forum/#!topic/php-fig/NWfyAeF7Psk>,
-      cancelled at the discretion of the sponsor <https://groups.google.com/forum/#!topic/php-fig/t4mW2TQF7iE>
+    - 第二次: <https://groups.google.com/forum/#!topic/php-fig/NWfyAeF7Psk>,
+      取消发起人的决定权 <https://groups.google.com/forum/#!topic/php-fig/t4mW2TQF7iE>
 
-    - 3rd attempt: TBD
+    - 第三次: 待定
 
 
-7. Relevant Links
+7. 相关链接
 -----------------
 
 - [Autoloader, round 4](https://groups.google.com/forum/#!topicsearchin/php-fig/autoload/php-fig/lpmJcmkNYjM)
