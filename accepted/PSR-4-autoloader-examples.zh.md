@@ -6,7 +6,7 @@ PSR-4 的实现示例
 闭包示例
 ---------------
 
-```php
+~~~php
 <?php
 /**
  * 特定项目实现示例
@@ -46,14 +46,14 @@ spl_autoload_register(function ($class) {
         require $file;
     }
 });
-```
+~~~
 
 类示例
 -------------
 
 下面示例实现类处理多个命名空间:
 
-```php
+~~~php
 <?php
 namespace Example;
 
@@ -229,13 +229,13 @@ class Psr4AutoloaderClass
         return false;
     }
 }
-```
+~~~
 
 ### 单元测试
 
 以下示例是对上述的类加载器单元测试:
 
-```php
+~~~php
 <?php
 namespace Example\Tests;
 

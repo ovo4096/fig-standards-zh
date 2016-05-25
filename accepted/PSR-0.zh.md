@@ -41,7 +41,7 @@
 
 下面的函数例子演示了怎么自动加载上文提出的标准。
 
-```php
+~~~php
 <?php
 
 function autoload($className)
@@ -59,7 +59,7 @@ function autoload($className)
     require $fileName;
 }
 spl_autoload_register('autoload');
-```
+~~~
 
 SplClassLoader 的实现
 -----------------------------

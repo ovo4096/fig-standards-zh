@@ -26,7 +26,7 @@ PSR-2 标准补充
 
 在 PSR-2 标准中下述示例是完全有效的:
 
-```php
+~~~php
 <?php
 somefunction($foo, $bar, [
   // ...
@@ -35,7 +35,7 @@ somefunction($foo, $bar, [
 $app->get('/hello/{name}', function ($name) use ($app) {
     return 'Hello '.$app->escape($name);
 });
-```
+~~~
 
 ### 3.2 - 扩展多个接口 (10/17/2013)
 

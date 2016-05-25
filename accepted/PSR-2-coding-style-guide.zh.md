@@ -57,7 +57,7 @@
 
 本示例做为一个快速概览，涵盖了下面的一些规则:
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -83,7 +83,7 @@ class Foo extends Bar implements FooInterface
         // 方法体
     }
 }
-```
+~~~
 
 2. 常规
 ----------
@@ -146,7 +146,7 @@ PHP 中的常量 `true`, `false`, 与 `null` **必须** 使用小写字母。
 
 示例:
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -156,7 +156,7 @@ use OtherVendor\OtherPackage\BazClass;
 
 // ... 其他的 PHP 代码 ...
 
-```
+~~~
 
 
 4. 类, 属性, 和方法
@@ -170,7 +170,7 @@ use OtherVendor\OtherPackage\BazClass;
 
 类 `class` 的开括号 `{` **必须** 单独占用一行，闭括号 `}` **必须** 在类体的下一行。
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -182,12 +182,12 @@ class ClassName extends ParentClass implements \ArrayAccess, \Countable
 {
     // 常量, 属性, 方法
 }
-```
+~~~
 
 `implements` 列表可能被分割为多个不同的行，每个分割行需要缩进一次。当这样做，列表的第一条
 **必须** 被放在下一行，并且每个接口 **必须** 占用一行。
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -202,7 +202,7 @@ class ClassName extends ParentClass implements
 {
     // 常量, 属性, 方法
 }
-```
+~~~
 
 ### 4.2. 属性
 
@@ -216,7 +216,7 @@ class ClassName extends ParentClass implements
 
 属性声明看起来像下面这样:
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -224,7 +224,7 @@ class ClassName
 {
     public $foo = null;
 }
-```
+~~~
 
 ### 4.3. 方法
 
@@ -238,7 +238,7 @@ class ClassName
 
 方法声明看起来像下面这样，注意括号 `()`, 逗号, 空格, 和大括号 `{}` 的放置位置:
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -249,7 +249,7 @@ class ClassName
         // 方法体
     }
 }
-```    
+~~~    
 
 ### 4.4. 方法的参数
 
@@ -257,7 +257,7 @@ class ClassName
 
 方法参数有默认值时 **必须** 添加在参数列表的结尾。
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -268,7 +268,7 @@ class ClassName
         // 方法体
     }
 }
-```
+~~~
 
 参数列表 **可能** 被分割为多行，每个子分割行需要缩进一次。当这样做时，第一个参数 **必须** 被
 放在下一行，并且其余的每个参数 **必须** 占用一行。
@@ -276,7 +276,7 @@ class ClassName
 当参数列表被分割为多行时，闭括号 `)` 与开括号 `{` **必须** 将它们放置在单独的一行，并且使用
 一个空格在他们之间隔开。
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -290,7 +290,7 @@ class ClassName
         // 方法体
     }
 }
-```
+~~~
 
 ### 4.5. `abstract`, `final`, 和 `static`
 
@@ -298,7 +298,7 @@ class ClassName
 
 若有 `static` 声明 **必须** 放置在访问修饰符之后。
 
-```php
+~~~php
 <?php
 namespace Vendor\Package;
 
@@ -313,7 +313,7 @@ abstract class ClassName
         // 方法体
     }
 }
-```
+~~~
 
 ### 4.6. 方法与函数的调用
 
@@ -321,24 +321,24 @@ abstract class ClassName
 **绝不** 要在开括号 `(` 之后添加一个空格，也 **绝不** 要在闭括号 `)` 之前添加一个空格。在参
 数列表中，**绝不** 要在每个逗号之前添加一个空格，而每个逗号之后 **必须** 添加一个空格。
 
-```php
+~~~php
 <?php
 bar();
 $foo->bar($arg1);
 Foo::bar($arg2, $arg3);
-```
+~~~
 
 参数列表 **可能** 被分割为多行，这样做时，每个子行需要缩进一次，每个参数 **必须** 单独占用一
 行。
 
-```php
+~~~php
 <?php
 $foo->bar(
     $longArgument,
     $longerArgument,
     $muchLongerArgument
 );
-```
+~~~
 
 5. 控制结构
 ---------------------
@@ -360,7 +360,7 @@ $foo->bar(
 一个 `if` 结构看起来像下面这样。注意其中括号 `()` 与大括号 `{}` 的放置位置， `else` 和
 `elseif` 与之前结构体的闭括号 `}` 在同一行。
 
-```php
+~~~php
 <?php
 if ($expr1) {
     // if 体
@@ -369,7 +369,7 @@ if ($expr1) {
 } else {
     // else 体;
 }
-```
+~~~
 
 `elseif` 关键字 **应该** 替代 `else if` 这样所有的控制关键字看起来都是一个单词。
 
@@ -380,7 +380,7 @@ if ($expr1) {
 **必须** 在同级的 `case` 体中缩进。当需要贯通执行时 **必须** 在一个不为空的 `case` 体中添
 加一条注释诸如 `// no break`。
 
-```php
+~~~php
 <?php
 switch ($expr) {
     case 0:
@@ -398,56 +398,56 @@ switch ($expr) {
         echo '缺省值 case';
         break;
 }
-```
+~~~
 
 
 ### 5.3. `while`, `do while`
 
 一个 `while` 语句看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
-```php
+~~~php
 <?php
 while ($expr) {
     // 结构体
 }
-```
+~~~
 
 同样一个 `do while` 看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
-```php
+~~~php
 <?php
 do {
     // 结构体;
 } while ($expr);
-```
+~~~
 
 ### 5.4. `for`
 
 一个 `for` 语句看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
-```php
+~~~php
 <?php
 for ($i = 0; $i < 10; $i++) {
     // for 体
 }
-```
+~~~
 
 ### 5.5. `foreach`
 
 一个 `foreach` 语句看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
-```php
+~~~php
 <?php
 foreach ($iterable as $key => $value) {
     // foreach 体
 }
-```
+~~~
 
 ### 5.6. `try`, `catch`
 
 一个 `try catch` 块看起来像下面这样。注意其中括号 `()`, 空格, 以及大括号 `{}` 的放置位置。
 
-```php
+~~~php
 <?php
 try {
     // try 体
@@ -456,7 +456,7 @@ try {
 } catch (OtherExceptionType $e) {
     // catch 体
 }
-```
+~~~
 
 6. 闭包 (Closures)
 -----------
@@ -474,7 +474,7 @@ try {
 
 一个闭包声明看起来像下面这样。注意其中括号 `()`, 逗号, 空格, 以及大括号 `{}` 的放置位置:
 
-```php
+~~~php
 <?php
 $closureWithArgs = function ($arg1, $arg2) {
     // 体
@@ -483,7 +483,7 @@ $closureWithArgs = function ($arg1, $arg2) {
 $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
     // 体
 };
-```
+~~~
 
 参数列表和变量列表 **可能** 被分割为多行，当这样做时，每个子行需要缩进一次，每个参数或变量
 **必须** 独立占用一行。
@@ -493,7 +493,7 @@ $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
 
 下面是有或没有参数列表和变量列表，并被分割为多行的闭包示例。
 
-```php
+~~~php
 <?php
 $longArgs_noVars = function (
     $longArgument,
@@ -538,11 +538,11 @@ $shortArgs_longVars = function ($arg) use (
 ) {
    // 体
 };
-```
+~~~
 
 注意这些格式化规则，也适用于闭包作为函数或方法的调用参数。
 
-```php
+~~~php
 <?php
 $foo->bar(
     $arg1,
@@ -551,7 +551,7 @@ $foo->bar(
     },
     $arg3
 );
-```
+~~~
 
 
 7. 总结

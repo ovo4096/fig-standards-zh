@@ -60,7 +60,7 @@
 
   以下占用符作为插值的参考例子:
 
-  ```php
+  ~~~php
   /**
    * 使用上下文值替换消息占用符
    */
@@ -84,7 +84,7 @@
 
   // 输出 "User bolivar created"
   echo interpolate($message, $context);
-  ```
+  ~~~
 
 ### 1.3 上下文
 
@@ -124,7 +124,7 @@
 3. `Psr\Log\LoggerInterface`
 ----------------------------
 
-```php
+~~~php
 <?php
 
 namespace Psr\Log;
@@ -233,12 +233,12 @@ interface LoggerInterface
      */
     public function log($level, $message, array $context = array());
 }
-```
+~~~
 
 4. `Psr\Log\LoggerAwareInterface`
 ---------------------------------
 
-```php
+~~~php
 <?php
 
 namespace Psr\Log;
@@ -256,12 +256,12 @@ interface LoggerAwareInterface
      */
     public function setLogger(LoggerInterface $logger);
 }
-```
+~~~
 
 5. `Psr\Log\LogLevel`
 ---------------------
 
-```php
+~~~php
 <?php
 
 namespace Psr\Log;
@@ -280,4 +280,4 @@ class LogLevel
     const INFO      = 'info';
     const DEBUG     = 'debug';
 }
-```
+~~~

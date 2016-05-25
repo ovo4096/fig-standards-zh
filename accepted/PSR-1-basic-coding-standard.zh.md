@@ -65,7 +65,7 @@ ini 设置, 发出错误或异常, 修改全局或静态变量, 读取或写入�
 
 下面的例子是文件同时具有声明与副作用，即这个是需要避免的一个例子:
 
-```php
+~~~php
 <?php
 // 副作用: 修改 ini 设置
 ini_set('error_reporting', E_ALL);
@@ -81,11 +81,11 @@ function foo()
 {
     // 函数体
 }
-```
+~~~
 
 下面这个例子是文件包含声明但无副作用，即这个是需要效仿的一个例子:
 
-```php
+~~~php
 <?php
 // 声明
 function foo()
@@ -100,7 +100,7 @@ if (! function_exists('bar')) {
         // 函数体
     }
 }
-```
+~~~
 
 
 3. 命名空间与类名
@@ -116,7 +116,7 @@ if (! function_exists('bar')) {
 
 示例:
 
-```php
+~~~php
 <?php
 // PHP 5.3 或更高版本:
 namespace Vendor\Model;
@@ -124,18 +124,18 @@ namespace Vendor\Model;
 class Foo
 {
 }
-```
+~~~
 
 代码写自 5.2.x 或更早的版本 **应该** 使用伪命名空间 (pseudo-namespacing) 转换，即类名加
 `Vendor_` 前缀。
 
-```php
+~~~php
 <?php
 // PHP 5.2.x 或更早的版本:
 class Vendor_Model_Foo
 {
 }
-```
+~~~
 
 4. 类常量, 属性, 以及方法
 -------------------------------------------
@@ -148,7 +148,7 @@ class Vendor_Model_Foo
 
 示例:
 
-```php
+~~~php
 <?php
 namespace Vendor\Model;
 
@@ -157,7 +157,7 @@ class Foo
     const VERSION = '1.0';
     const DATE_APPROVED = '2012-06-01';
 }
-```
+~~~
 
 ### 4.2. 属性
 
