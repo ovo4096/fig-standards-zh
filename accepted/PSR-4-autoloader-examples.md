@@ -6,7 +6,7 @@ The following are examples illustrate PSR-4 compliant code:
 Closure Example
 ---------------
 
-```php
+~~~php
 <?php
 /**
  * An example of a project-specific implementation.
@@ -16,7 +16,7 @@ Closure Example
  * from /path/to/project/src/Baz/Qux.php:
  *
  *      new \Foo\Bar\Baz\Qux;
- *      
+ *
  * @param string $class The fully-qualified class name.
  * @return void
  */
@@ -48,7 +48,7 @@ spl_autoload_register(function ($class) {
         require $file;
     }
 });
-```
+~~~
 
 Class Example
 -------------
@@ -56,7 +56,7 @@ Class Example
 The following is an example class implementation to handle multiple
 namespaces:
 
-```php
+~~~php
 <?php
 namespace Example;
 
@@ -84,10 +84,10 @@ namespace Example;
  *      <?php
  *      // instantiate the loader
  *      $loader = new \Example\Psr4AutoloaderClass;
- *      
+ *
  *      // register the autoloader
  *      $loader->register();
- *      
+ *
  *      // register the base directories for the namespace prefix
  *      $loader->addNamespace('Foo\Bar', '/path/to/packages/foo-bar/src');
  *      $loader->addNamespace('Foo\Bar', '/path/to/packages/foo-bar/tests');
@@ -186,7 +186,7 @@ class Psr4AutoloaderClass
 
             // remove the trailing namespace separator for the next iteration
             // of strrpos()
-            $prefix = rtrim($prefix, '\\');   
+            $prefix = rtrim($prefix, '\\');
         }
 
         // never found a mapped file
@@ -244,13 +244,13 @@ class Psr4AutoloaderClass
         return false;
     }
 }
-```
+~~~
 
 ### Unit Tests
 
 The following example is one way of unit testing the above class loader:
 
-```php
+~~~php
 <?php
 namespace Example\Tests;
 
